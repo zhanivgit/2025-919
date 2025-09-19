@@ -85,6 +85,7 @@
     "stm32f10x_tim.h": "c",
     "limits": "c",
     "math.h": "c",
-    "oled_font.h": "c"
+    "oled_font.h": "c",
+    "stdlib.h": "c"
   }
 }

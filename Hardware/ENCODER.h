@@ -12,13 +12,15 @@
 // 编码器初始化函数
 void Encoder_Init(void);
 
-// 读取左编码器脉冲数
-int Read_Left_Encoder(void);
+// 读取后轮编码器脉冲数
+int Read_Rear_Left_Encoder(void);
+int Read_Rear_Right_Encoder(void);
 
-// 读取右编码器脉冲数
-int Read_Right_Encoder(void);
+// 读取前轮编码器脉冲数
+int Read_Front_Left_Encoder(void);
+int Read_Front_Right_Encoder(void);
 
-// 清零编码器计数
-void Clear_Encoder_Count(void);
+// 清零所有编码器计数
+void Clear_All_Encoder_Count(void);
 
 #endif /* __ENCODER_H */

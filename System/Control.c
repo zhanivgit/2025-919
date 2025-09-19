@@ -32,11 +32,11 @@ void turn_degrees(float angle, int max_speed) {
     float last_error = 0;
     int direction = (angle > 0) ? 1 : -1;
 
-    Clear_Encoder_Count();
+    Clear_All_Encoder_Count();
 
     while (1) {
-        left_current_pulses = abs(Read_Left_Encoder());
-        right_current_pulses = abs(Read_Right_Encoder());
+        left_current_pulses = abs(Read_Rear_Left_Encoder());
+        right_current_pulses = abs(Read_Rear_Right_Encoder());
         int average_pulses = (left_current_pulses + right_current_pulses) / 2;
         int error = required_pulses - average_pulses;
         integral += error;
@@ -96,12 +96,12 @@ void move_straight(float distance_cm, int max_speed)
     float integral = 0;
     float last_error = 0;
 
-    Clear_Encoder_Count();
+    Clear_All_Encoder_Count();
 
     while(1)
     {
-        left_current_pulses = Read_Left_Encoder();
-        right_current_pulses = Read_Right_Encoder();
+        left_current_pulses = Read_Rear_Left_Encoder();
+        right_current_pulses = Read_Rear_Right_Encoder();
         
         int average_pulses = (left_current_pulses + right_current_pulses) / 2;
 

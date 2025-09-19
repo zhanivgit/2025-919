@@ -1,0 +1,27 @@
+# 忽略编译输出文件夹
+Objects/
+Listings/
+DebugConfig/
+
+# 忽略Keil用户配置文件
+*.uvguix.*
+
+# 忽略其他编译生成的文件
+*.axf
+*.map
+*.sct
+*.lnp
+*.htm
+*.build_log.htm
+*.bak
+
+# 忽略批处理脚本
+keilkill.bat
+
+# 忽略 Library 文件夹
+Library/
+
+# 忽略 User 文件夹中的所有内容...
+User/*
+# ...除了 main.c
+!User/main.c

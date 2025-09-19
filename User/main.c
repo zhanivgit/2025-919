@@ -38,27 +38,32 @@ int main(void)
 	// turn_degrees(-90, 300); //转向测试
 	// PID_Init(3, 0.0, 0.1);//视觉pid初始化
 	// move_straight(100, 300); // 编码器前进测试
-	OLED_ShowString(1, 1, "Motor Test..."); //显示测试信息
+	// OLED_ShowString(1, 1, "Motor Test..."); //显示测试信息
 
-	// 正转2秒
-	OLED_ShowString(2, 1, "Forward ");
-	MotorA_SetSpeed(200);         //左后轮
-	MotorB_SetSpeed(200);         //右后轮
-	MotorC_SetSpeed(200);		//左前轮
-	MotorD_SetSpeed(200);		//右前轮	
-	Delay_ms(2000);
-	Move(-200);
-	Delay_ms(2000);
-	Move(0);
+	// // 正转2秒
+	// OLED_ShowString(2, 1, "Forward ");
+	// MotorA_SetSpeed(200);         //左后轮
+	// MotorB_SetSpeed(200);         //右后轮
+	// MotorC_SetSpeed(200);		//左前轮
+	// MotorD_SetSpeed(200);		//右前轮	
+	// Delay_ms(2000);
+	// Move(-200);
+	// Delay_ms(2000);
+	// Move(0);
 	while (1)
 	{
-		//  int left_encoder = Read_Left_Encoder();    //编码器读取测试
-        //  int right_encoder = Read_Right_Encoder();
-        //  OLED_ShowString(2, 1, "L:");
-        //  OLED_ShowSignedNum(2, 3, left_encoder, 5); // 在第2行显示左编码器值
-        
-        //  OLED_ShowString(3, 1, "R:");
-        //  OLED_ShowSignedNum(3, 3, right_encoder, 5); // 在第3行显示右编码器值
-        
+		 int rear_left_encoder = Read_Rear_Left_Encoder();        //左后轮
+		 int rear_right_encoder = Read_Rear_Right_Encoder();    //右后轮
+		 int front_left_encoder = Read_Front_Left_Encoder();         //右前轮
+		 int front_right_encoder = Read_Front_Right_Encoder();      //左前轮
+
+		 OLED_ShowString(1, 1, "BL:");
+		 OLED_ShowSignedNum(1, 4, rear_left_encoder, 5);
+		 OLED_ShowString(2, 1, "BR:");
+		 OLED_ShowSignedNum(2, 4, rear_right_encoder, 5);
+		 OLED_ShowString(3, 1, "FL:");
+		 OLED_ShowSignedNum(3, 4, front_left_encoder, 5);
+		 OLED_ShowString(4, 1, "FR:");
+		 OLED_ShowSignedNum(4, 4, front_right_encoder, 5);
 	}
 }
