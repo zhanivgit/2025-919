@@ -1,8 +1,11 @@
 .\objects\control.o: System\Control.c
 .\objects\control.o: System\Control.h
+.\objects\control.o: D:\51\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\control.o: D:\51\ARM\ARMCC\Bin\..\include\math.h
+.\objects\control.o: D:\51\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\control.o: .\Hardware\Motor.h
 .\objects\control.o: .\Start\stm32f10x.h
 .\objects\control.o: .\Start\core_cm3.h
-.\objects\control.o: D:\51\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\control.o: .\Start\system_stm32f10x.h
 .\objects\control.o: .\User\stm32f10x_conf.h
 .\objects\control.o: .\Library\stm32f10x_adc.h
@@ -29,9 +32,6 @@
 .\objects\control.o: .\Library\stm32f10x_usart.h
 .\objects\control.o: .\Library\stm32f10x_wwdg.h
 .\objects\control.o: .\Library\misc.h
-.\objects\control.o: D:\51\ARM\ARMCC\Bin\..\include\math.h
-.\objects\control.o: D:\51\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\control.o: .\Hardware\Motor.h
 .\objects\control.o: .\Hardware\ENCODER.h
 .\objects\control.o: .\Hardware\OLED.h
 .\objects\control.o: System\Delay.h

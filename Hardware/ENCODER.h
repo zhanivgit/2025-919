@@ -17,8 +17,8 @@ int Read_Rear_Left_Encoder(void);
 int Read_Rear_Right_Encoder(void);
 
 // 读取前轮编码器脉冲数
-int Read_Front_Left_Encoder(void);
 int Read_Front_Right_Encoder(void);
+int Read_Front_Left_Encoder(void);
 
 // 清零所有编码器计数
 void Clear_All_Encoder_Count(void);

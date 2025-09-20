@@ -90,13 +90,13 @@ int Read_Rear_Right_Encoder(void) {
     return (short)TIM_GetCounter(TIM1);
 }
 
-// 读取左前轮编码器脉冲数 (TIM5)
-int Read_Front_Left_Encoder(void) {
+// 读取右前轮编码器脉冲数 (TIM5)
+int Read_Front_Right_Encoder(void) {
     return (short)TIM_GetCounter(TIM5);
 }
 
-// 读取右前轮编码器脉冲数 (TIM8)
-int Read_Front_Right_Encoder(void) {
+// 读取左前轮编码器脉冲数 (TIM8)
+int Read_Front_Left_Encoder(void) {
     return (short)TIM_GetCounter(TIM8);
 }
 

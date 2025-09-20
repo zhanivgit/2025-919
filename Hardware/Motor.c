@@ -213,37 +213,6 @@ void Move(int16_t speed)
 }
 
 
-// 差速转向控制函数
-// speed: 转向速度绝对值（0-1000）
-// dir: 转向方向（0=左转，1=右转）
-void Motor_TurnInPlace(uint16_t speed, uint8_t dir)
-{
-    // 限制速度范围
-    if(speed > 1000) speed = 1000;
-    
-    if(dir == 0) { // 原地左转
-        // 左轮后退
-        GPIO_ResetBits(GPIOB, MOTOR_AIN1_PIN);
-        GPIO_SetBits(GPIOB, MOTOR_AIN2_PIN);
-        TIM_SetCompare4(TIM3, speed);  // 左轮PWM
-        
-        // 右轮前进
-        GPIO_SetBits(GPIOB, MOTOR_BIN1_PIN);
-        GPIO_ResetBits(GPIOB, MOTOR_BIN2_PIN);
-        TIM_SetCompare3(TIM3, speed);  // 右轮PWM
-    }
-    else {        // 原地右转
-        // 左轮前进
-        GPIO_SetBits(GPIOB, MOTOR_AIN1_PIN);
-        GPIO_ResetBits(GPIOB, MOTOR_AIN2_PIN);
-        TIM_SetCompare4(TIM3, speed);  // 左轮PWM
-        
-        // 右轮后退
-        GPIO_ResetBits(GPIOB, MOTOR_BIN1_PIN);
-        GPIO_SetBits(GPIOB, MOTOR_BIN2_PIN);
-        TIM_SetCompare3(TIM3, speed);  // 右轮PWM
-    }
-}
 
 // 停止函数
 void Motor_Stop(void)
@@ -257,4 +226,82 @@ void Motor_Stop(void)
     TIM_SetCompare4(TIM3, 0);
     TIM_SetCompare1(TIM4, 0);
     TIM_SetCompare2(TIM4, 0);
+}
+
+/**
+  * @brief  控制小车向左平移
+  * @param  speed 速度（-1000 到 1000）
+  * @retval 无
+  */
+void Motor_TranslateLeft(int16_t speed)
+{
+    MotorC_SetSpeed(-speed); // 左前轮
+    MotorD_SetSpeed(speed);  // 右前轮
+    MotorA_SetSpeed(speed);  // 左后轮
+    MotorB_SetSpeed(-speed); // 右后轮
+}
+
+/**
+  * @brief  控制小车向右平移
+  * @param  speed 速度（-1000 到 1000）
+  * @retval 无
+  */
+void Motor_TranslateRight(int16_t speed)
+{
+    MotorC_SetSpeed(speed);   // 左前轮
+    MotorD_SetSpeed(-speed);  // 右前轮
+    MotorA_SetSpeed(-speed);  // 左后轮
+    MotorB_SetSpeed(speed);   // 右后轮
+}
+
+/**
+  * @brief  控制小车向左前方平移
+  * @param  speed 速度（0 到 1000）
+  * @retval 无
+  */
+void Motor_TranslateForwardLeft(int16_t speed)
+{
+    MotorA_SetSpeed(speed);   // 左后轮
+    MotorD_SetSpeed(speed);   // 右前轮
+    MotorC_SetSpeed(0);       // 左前轮停止
+    MotorB_SetSpeed(0);       // 右后轮停止
+}
+
+/**
+  * @brief  控制小车向右前方平移
+  * @param  speed 速度（0 到 1000）
+  * @retval 无
+  */
+void Motor_TranslateForwardRight(int16_t speed)
+{
+    MotorC_SetSpeed(speed);   // 左前轮
+    MotorB_SetSpeed(speed);   // 右后轮
+    MotorA_SetSpeed(0);       // 左后轮停止
+    MotorD_SetSpeed(0);       // 右前轮停止
+}
+
+/**
+  * @brief  控制小车向左后方平移
+  * @param  speed 速度（0 到 1000）
+  * @retval 无
+  */
+void Motor_TranslateBackwardLeft(int16_t speed)
+{
+    MotorC_SetSpeed(-speed);  // 左前轮
+    MotorB_SetSpeed(-speed);  // 右后轮
+    MotorA_SetSpeed(0);       // 左后轮停止
+    MotorD_SetSpeed(0);       // 右前轮停止
+}
+
+/**
+  * @brief  控制小车向右后方平移
+  * @param  speed 速度（0 到 1000）
+  * @retval 无
+  */
+void Motor_TranslateBackwardRight(int16_t speed)
+{
+    MotorA_SetSpeed(-speed);  // 左后轮
+    MotorD_SetSpeed(-speed);  // 右前轮
+    MotorC_SetSpeed(0);       // 左前轮停止
+    MotorB_SetSpeed(0);       // 右后轮停止
 }

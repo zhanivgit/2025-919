@@ -8,7 +8,7 @@
 #define MOTOR_BIN1_PIN    GPIO_Pin_14
 #define MOTOR_BIN2_PIN    GPIO_Pin_15                                                                                      
 #define MOTOR_PWMB_PIN    GPIO_Pin_0
-//8  9  左前轮   5  6  右前轮
+//8  9  左前轮   5  10  右前轮
 #define MOTOR_CIN1_PIN    GPIO_Pin_8    //前轮
 #define MOTOR_CIN2_PIN    GPIO_Pin_9
 #define MOTOR_PWMC_PIN    GPIO_Pin_6
@@ -23,7 +23,12 @@ void MotorA_SetSpeed(int16_t speed);
 void MotorB_SetSpeed(int16_t speed);
 void MotorC_SetSpeed(int16_t speed);
 void MotorD_SetSpeed(int16_t speed);
-void Motor_TurnInPlace(uint16_t speed, uint8_t dir);
 void Motor_Stop(void);
 void Move(int16_t speed);
+void Motor_TranslateLeft(int16_t speed);
+void Motor_TranslateRight(int16_t speed);
+void Motor_TranslateForwardLeft(int16_t speed);
+void Motor_TranslateForwardRight(int16_t speed);
+void Motor_TranslateBackwardLeft(int16_t speed);
+void Motor_TranslateBackwardRight(int16_t speed);
 #endif

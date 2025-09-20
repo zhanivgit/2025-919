@@ -1,31 +1,22 @@
 #ifndef __CONTROL_H
 #define __CONTROL_H
  
-#include "stm32f10x.h"
- 
+#include <stdint.h> // 添加此行以定义 int16_t
 
- // PID结构体定义
-typedef struct {
-    float Kp;
-    float Ki;
-    float Kd;
-    
-    float Error;
-    float Last_Error;
-    float Integral;
-    
-    float Output;
-} PID;
+// 定义麦克纳姆轮小车的移动方向
+typedef enum {
+    MOVE_FORWARD,
+    MOVE_BACKWARD,
+    MOVE_TRANSLATE_LEFT,
+    MOVE_TRANSLATE_RIGHT,
+    MOVE_FORWARD_LEFT,
+    MOVE_FORWARD_RIGHT,
+    MOVE_BACKWARD_LEFT,
+    MOVE_BACKWARD_RIGHT
+} MecanumMovementType;
 
-extern PID FindLinePID; // 声明外部全局变量
 
-void PID_Init(float Kp, float Ki, float Kd);
-float Position_PID_FindLine(float target_error);
-
-// 函数声明
-// 根据给定的角度和最大速度旋转车辆
-void turn_degrees(float angle, int max_speed);
-// 根据给定的距离和最大速度直线行驶
-void move_straight(float distance_cm, int max_speed);
+// 麦克纳姆轮小车按指定方向行驶固定距离
+void Move_Distance_Mecanum(float distance_cm, int16_t speed, MecanumMovementType movement_type);
 
 #endif

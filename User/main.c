@@ -10,16 +10,6 @@
 #include "Control.h"   //PID
 
 
-
-// 参数宏定义
-#define WHEEL_DIAMETER_MM   96.0f
-#define WHEEL_BASE_MM       260.0f
-#define ENCODER_PPR         1040 
-#define PI                  3.1415926535f
-// 全局变量，供Control.c使用
-int left_current_pulses;
-int right_current_pulses;
-float rho_err;
 int Base_Speed = 200; // 基础速度，可调
 
 
@@ -33,37 +23,55 @@ int main(void)
 	Encoder_Init();
 	Serial_Init();
 	Delay_ms(1000);
-	// turn_degrees(90, 300); //转向测试
-	// Delay_ms(1000);
-	// turn_degrees(-90, 300); //转向测试
-	// PID_Init(3, 0.0, 0.1);//视觉pid初始化
-	// move_straight(100, 300); // 编码器前进测试
-	// OLED_ShowString(1, 1, "Motor Test..."); //显示测试信息
-
-	// // 正转2秒
-	// OLED_ShowString(2, 1, "Forward ");
-	// MotorA_SetSpeed(200);         //左后轮
-	// MotorB_SetSpeed(200);         //右后轮
-	// MotorC_SetSpeed(200);		//左前轮
-	// MotorD_SetSpeed(200);		//右前轮	
-	// Delay_ms(2000);
-	// Move(-200);
-	// Delay_ms(2000);
-	// Move(0);
+	
+	// 显示初始信息
+	OLED_ShowString(1, 1, "Encoder Test");
+	OLED_ShowString(2, 1, "Basic Directions");
+	Delay_ms(2000);
+	
+	// 测试向前移动
+	OLED_ShowString(1, 1, "Forward 5cm");
+	OLED_ShowString(4, 1, "Running...");
+	Clear_All_Encoder_Count();
+	Delay_ms(500);
+	Move_Distance_Mecanum(5.0f, 200, MOVE_FORWARD);
+	OLED_ShowString(4, 1, "Complete!");
+	Delay_ms(1000);
+	
+	// 测试向后移动
+	OLED_ShowString(1, 1, "Backward 5cm");
+	OLED_ShowString(4, 1, "Running...");
+	Clear_All_Encoder_Count();
+	Delay_ms(500);
+	Move_Distance_Mecanum(5.0f, 200, MOVE_BACKWARD);
+	OLED_ShowString(4, 1, "Complete!");
+	Delay_ms(1000);
+	
+	// 测试向左移动
+	OLED_ShowString(1, 1, "Left 5cm");
+	OLED_ShowString(4, 1, "Running...");
+	Clear_All_Encoder_Count();
+	Delay_ms(500);
+	Move_Distance_Mecanum(5.0f, 200, MOVE_TRANSLATE_LEFT);
+	OLED_ShowString(4, 1, "Complete!");
+	Delay_ms(1000);
+	
+	// 测试向右移动
+	OLED_ShowString(1, 1, "Right 5cm");
+	OLED_ShowString(4, 1, "Running...");
+	Clear_All_Encoder_Count();
+	Delay_ms(500);
+	Move_Distance_Mecanum(5.0f, 200, MOVE_TRANSLATE_RIGHT);
+	Delay_ms(1000);
+	
+	// 显示测试完成
+	OLED_ShowString(1, 1, "Basic Tests");
+	OLED_ShowString(2, 1, "Complete!");
+	OLED_ShowString(3, 1, "");
+	OLED_ShowString(4, 1, "");
+	
 	while (1)
 	{
-		 int rear_left_encoder = Read_Rear_Left_Encoder();        //左后轮
-		 int rear_right_encoder = Read_Rear_Right_Encoder();    //右后轮
-		 int front_left_encoder = Read_Front_Left_Encoder();         //右前轮
-		 int front_right_encoder = Read_Front_Right_Encoder();      //左前轮
-
-		 OLED_ShowString(1, 1, "BL:");
-		 OLED_ShowSignedNum(1, 4, rear_left_encoder, 5);
-		 OLED_ShowString(2, 1, "BR:");
-		 OLED_ShowSignedNum(2, 4, rear_right_encoder, 5);
-		 OLED_ShowString(3, 1, "FL:");
-		 OLED_ShowSignedNum(3, 4, front_left_encoder, 5);
-		 OLED_ShowString(4, 1, "FR:");
-		 OLED_ShowSignedNum(4, 4, front_right_encoder, 5);
+		// 主循环可以添加其他测试代码
 	}
 }
