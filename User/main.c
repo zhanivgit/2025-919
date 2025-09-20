@@ -7,7 +7,7 @@
 #include "Motor.h"     	//电机
 #include "ENCODER.h"   	//编码器
 #include "Serial.h"    	//串口
-#include "Control.h"   //PID
+#include "Control.h"   //控制逻辑
 
 
 int Base_Speed = 200; // 基础速度，可调

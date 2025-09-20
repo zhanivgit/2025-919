@@ -23,7 +23,14 @@ keilkill.bat
 # 忽略 Library 文件夹
 Library/
 
+# 忽略 .vscode 目录及其内容
+.vscode/
+
 # 忽略 User 文件夹中的所有内容...
 User/*
 # ...除了 main.c
 !User/main.c
+
+# 忽略所有日志文件（包括 uv4.log）
+*.log
+*.lock
