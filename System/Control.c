@@ -15,6 +15,7 @@
 #define ENCODER_PPR         1040
 #define PI                  3.1415926535f
 
+
 /**
   * @brief  麦克纳姆轮小车按指定方向行驶固定距离
   * @param  distance_cm 距离（厘米）
@@ -69,6 +70,7 @@ void Move_Distance_Mecanum(float distance_cm, int16_t speed, MecanumMovementType
         }
         
 
+        Delay_ms(10); // 短暂延时以稳定控制
     }
     Motor_Stop(); // 确保最终停止
 }

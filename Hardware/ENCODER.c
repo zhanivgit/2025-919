@@ -23,7 +23,7 @@ void Encoder_Init(void) {
 
     // TIM2_CH1 (PA.15), TIM2_CH2 (PB.03) - 左后轮编码器 (重映射)
     GPIO_PinRemapConfig(GPIO_FullRemap_TIM2, ENABLE);
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;                                                                                                                    
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;

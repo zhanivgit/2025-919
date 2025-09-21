@@ -750,6 +750,16 @@
               <FileType>5</FileType>
               <FilePath>.\Hardware\Serial.h</FilePath>
             </File>
+            <File>
+              <FileName>GY25.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\GY25.c</FilePath>
+            </File>
+            <File>
+              <FileName>GY25.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\GY25.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
