@@ -8,7 +8,8 @@
 #include "ENCODER.h"   	//编码器
 #include "Serial.h"    	//串口
 #include "Control.h"   //控制逻辑
-// #include "GY25.h"
+#include "GY25.h"      //GY-25陀螺仪
+#include "stm32f10x_usart.h" // 显式包含USART头文件
 
 int Base_Speed = 200; // 基础速度，可调
 
@@ -22,10 +23,10 @@ int main(void)
 	Motor_Init();
 	Encoder_Init();
 	Serial_Init();
-	// GY25_Init();		//GY-25陀螺仪初始化
+	GY25_Init();		//GY-25陀螺仪初始化
 	Delay_ms(1000);
-	// GY25_SendQuery();
-	// OLED_ShowString(2, 1, "YAW:");
+	GY25_SendQuery();
+	OLED_ShowString(2, 1, "YAW:");
 	Delay_ms(1000);
 	Move_Distance_Mecanum(5.0f, 200, MOVE_TRANSLATE_LEFT);
 	Delay_ms(1000);
@@ -35,9 +36,9 @@ int main(void)
 
 	
 
-	// while (1)
-	// {GY25_ProcessData();
-	// }
+	while (1)
+	{
+		GY25_ProcessData();
+	}
 	
 }
-

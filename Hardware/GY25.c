@@ -22,42 +22,43 @@ void GY25_Init(void)
     USART_InitTypeDef USART_InitStructure;
     NVIC_InitTypeDef NVIC_InitStructure;
     
-    // 使能USART1和GPIOA时钟
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 | RCC_APB2Periph_GPIOA | RCC_APB2Periph_AFIO, ENABLE);
+    // 使能UART4和GPIOC时钟
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_AFIO, ENABLE);
     
-    // 配置USART1_TX (PA9)
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+    // 配置UART4_TX (PC10)
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-    GPIO_Init(GPIOA, &GPIO_InitStructure);
+    GPIO_Init(GPIOC, &GPIO_InitStructure);
     
-    // 配置USART1_RX (PA10)
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+    // 配置UART4_RX (PC11)
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-    GPIO_Init(GPIOA, &GPIO_InitStructure);
+    GPIO_Init(GPIOC, &GPIO_InitStructure);
     
     // 配置NVIC
-    NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
     
-    // 配置USART1
-    USART_DeInit(USART1);
+    // 配置UART4
+    USART_DeInit(UART4);
     USART_InitStructure.USART_BaudRate = 115200;
     USART_InitStructure.USART_WordLength = USART_WordLength_8b;
     USART_InitStructure.USART_StopBits = USART_StopBits_1;
     USART_InitStructure.USART_Parity = USART_Parity_No;
     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
     USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
-    USART_Init(USART1, &USART_InitStructure);
+    USART_Init(UART4, &USART_InitStructure);
     
     // 使能接收中断
-    USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+    USART_ITConfig(UART4, USART_IT_RXNE, ENABLE);
     
-    // 使能USART1
-    USART_Cmd(USART1, ENABLE);
+    // 使能UART4
+    USART_Cmd(UART4, ENABLE);
 }
 
 /**
@@ -67,8 +68,8 @@ void GY25_Init(void)
  */
 void GY25_SendQuery(void)
 {
-    USART_SendData(USART1, 0xA5);
-    USART_SendData(USART1, 0x51);  // 单一查询指令
+    USART_SendData(UART4, 0xA5);
+    USART_SendData(UART4, 0x51);  // 单一查询指令
 }
 
 /**
@@ -192,11 +193,11 @@ uint8_t GY25_IsDataValid(void)
  * @param  无
  * @retval 无
  */
-void USART1_IRQHandler(void)
+void UART4_IRQHandler(void)
 {
-    if (USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
+    if (USART_GetITStatus(UART4, USART_IT_RXNE) != RESET)
     {
-        uint8_t received_data = USART_ReceiveData(USART1);
+        uint8_t received_data = USART_ReceiveData(UART4);
         
         // 检查帧头
         if (GY25_RxIndex == 0 && received_data != 0xAA)
@@ -230,4 +231,4 @@ void USART1_IRQHandler(void)
             GY25_RxIndex = 0;
         }
     }
-} 
+}
