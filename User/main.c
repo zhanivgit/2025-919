@@ -24,35 +24,14 @@ int main(void)
 	Serial_Init();
 	Delay_ms(1000);
 	
-	// 显示初始信息
-	OLED_ShowString(1, 1, "Encoder Test");
-	OLED_ShowString(2, 1, "Basic Directions");
-	Delay_ms(2000);
-	
-	// 测试向前移动
-	OLED_ShowString(1, 1, "Forward 5cm");
-	OLED_ShowString(4, 1, "Running...");
-	Clear_All_Encoder_Count();
-	Delay_ms(500);
-	Move_Distance_Mecanum(5.0f, 200, MOVE_FORWARD);
-	OLED_ShowString(4, 1, "Complete!");
-	Delay_ms(1000);
-	
-	// 测试向后移动
-	OLED_ShowString(1, 1, "Backward 5cm");
-	OLED_ShowString(4, 1, "Running...");
-	Clear_All_Encoder_Count();
-	Delay_ms(500);
-	Move_Distance_Mecanum(5.0f, 200, MOVE_BACKWARD);
-	OLED_ShowString(4, 1, "Complete!");
-	Delay_ms(1000);
+
 	
 	// 测试向左移动
 	OLED_ShowString(1, 1, "Left 5cm");
 	OLED_ShowString(4, 1, "Running...");
 	Clear_All_Encoder_Count();
 	Delay_ms(500);
-	Move_Distance_Mecanum(5.0f, 200, MOVE_TRANSLATE_LEFT);
+	Move_Distance_Mecanum(40.0f, 200, MOVE_TRANSLATE_LEFT);
 	OLED_ShowString(4, 1, "Complete!");
 	Delay_ms(1000);
 	
@@ -61,7 +40,7 @@ int main(void)
 	OLED_ShowString(4, 1, "Running...");
 	Clear_All_Encoder_Count();
 	Delay_ms(500);
-	Move_Distance_Mecanum(5.0f, 200, MOVE_TRANSLATE_RIGHT);
+	Move_Distance_Mecanum(40.0f, 200, MOVE_TRANSLATE_RIGHT);
 	Delay_ms(1000);
 	
 	// 显示测试完成

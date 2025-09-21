@@ -27,8 +27,5 @@ void Motor_Stop(void);
 void Move(int16_t speed);
 void Motor_TranslateLeft(int16_t speed);
 void Motor_TranslateRight(int16_t speed);
-void Motor_TranslateForwardLeft(int16_t speed);
-void Motor_TranslateForwardRight(int16_t speed);
-void Motor_TranslateBackwardLeft(int16_t speed);
-void Motor_TranslateBackwardRight(int16_t speed);
+
 #endif

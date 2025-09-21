@@ -31,7 +31,7 @@ void Move_Distance_Mecanum(float distance_cm, int16_t speed, MecanumMovementType
     Clear_All_Encoder_Count(); // 清零所有编码器计数
 
     int current_average_pulses = 0;
-
+    
     while (1)
     {
         // 读取所有四个编码器的绝对值并计算平均值
@@ -63,31 +63,12 @@ void Move_Distance_Mecanum(float distance_cm, int16_t speed, MecanumMovementType
             case MOVE_TRANSLATE_RIGHT:
                 Motor_TranslateRight(speed);
                 break;
-            case MOVE_FORWARD_LEFT:
-                Motor_TranslateForwardLeft(speed);
-                break;
-            case MOVE_FORWARD_RIGHT:
-                Motor_TranslateForwardRight(speed);
-                break;
-            case MOVE_BACKWARD_LEFT:
-                Motor_TranslateBackwardLeft(speed);
-                break;
-            case MOVE_BACKWARD_RIGHT:
-                Motor_TranslateBackwardRight(speed);
-                break;
             default:
                 Motor_Stop();
                 break;
         }
         
-        OLED_ShowString(2, 1, "Goal:");
-        OLED_ShowSignedNum(2, 6, required_pulses, 5);
-        OLED_ShowString(3, 1, "Now :");
-        OLED_ShowSignedNum(3, 6, current_average_pulses, 5);
-        OLED_ShowString(4, 1, "Type:");
-        OLED_ShowSignedNum(4, 6, movement_type, 1); // 显示移动类型枚举值
 
-        Delay_ms(10); // 适当延时
     }
     Motor_Stop(); // 确保最终停止
 }

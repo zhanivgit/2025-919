@@ -93,11 +93,11 @@
         {
             "name": "Target 1",
             "includePath": [
-                "e:\\trsalatec\\zet6\\Start",
-                "e:\\trsalatec\\zet6\\Library",
-                "e:\\trsalatec\\zet6\\User",
-                "e:\\trsalatec\\zet6\\System",
-                "e:\\trsalatec\\zet6\\Hardware"
+                "e:\\trsalatec\\jiqiren\\2025-919-1\\Start",
+                "e:\\trsalatec\\jiqiren\\2025-919-1\\Library",
+                "e:\\trsalatec\\jiqiren\\2025-919-1\\User",
+                "e:\\trsalatec\\jiqiren\\2025-919-1\\System",
+                "e:\\trsalatec\\jiqiren\\2025-919-1\\Hardware"
             ],
             "defines": [
                 "STM32F10X_HD",
