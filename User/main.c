@@ -11,7 +11,7 @@
 #include "GY25.h"      //GY-25陀螺仪
 #include "stm32f10x_usart.h" // 显式包含USART头文件
 
-int Base_Speed = 200; // 基础速度，可调
+int Base_Speed = 170; // 基础速度，可调
 
 
 int main(void)
@@ -24,17 +24,15 @@ int main(void)
 	Encoder_Init();
 	Serial_Init();
 	GY25_Init();		//GY-25陀螺仪初始化
-	Delay_ms(1000);
+	Delay_ms(2000);
 	GY25_SendQuery();
 	OLED_ShowString(2, 1, "YAW:");
-	Delay_ms(1000);
-	Move_Distance_Mecanum(100.0f, 200, MOVE_TRANSLATE_LEFT);
-	Delay_ms(1000);
-	Move_Distance_Mecanum(20.0f, 200, MOVE_FORWARD);
-	Move_Distance_Mecanum(100.0f, 200, MOVE_TRANSLATE_RIGHT);
-	Delay_ms(1000);
-
-
+	Move_Distance_Mecanum(50, Base_Speed, MOVE_FORWARD);
+	Move_Distance_Mecanum(80, Base_Speed, MOVE_TRANSLATE_LEFT);
+	Move_Distance_Mecanum(25, Base_Speed, MOVE_FORWARD);
+	Move_Distance_Mecanum(90, Base_Speed, MOVE_TRANSLATE_LEFT);
+	Move_Distance_Mecanum(25, Base_Speed, MOVE_BACKWARD);
+	Move_Distance_Mecanum(30, Base_Speed, MOVE_TRANSLATE_LEFT);
 	
 
 	while (1)
