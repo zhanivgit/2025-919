@@ -239,3 +239,19 @@ void Motor_TranslateRight(int16_t speed)
     MotorA_SetSpeed(-speed);  // 左后轮
     MotorB_SetSpeed(speed);   // 右后轮
 }
+
+/**
+  * @brief  设置所有四个麦克纳姆轮的独立速度
+  * @param  speed_FL: 左前轮速度
+  * @param  speed_FR: 右前轮速度
+  * @param  speed_RL: 左后轮速度
+  * @param  speed_RR: 右后轮速度
+  * @retval 无
+  */
+void Motor_SetSpeed(int16_t speed_FL, int16_t speed_FR, int16_t speed_RL, int16_t speed_RR)
+{
+    MotorC_SetSpeed(speed_FL); // 左前轮
+    MotorD_SetSpeed(speed_FR); // 右前轮
+    MotorA_SetSpeed(speed_RL); // 左后轮
+    MotorB_SetSpeed(speed_RR); // 右后轮
+}

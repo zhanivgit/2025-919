@@ -36,6 +36,7 @@ void MotorA_SetSpeed(int16_t speed);
 void MotorB_SetSpeed(int16_t speed);
 void MotorC_SetSpeed(int16_t speed);
 void MotorD_SetSpeed(int16_t speed);
+void Motor_SetSpeed(int16_t speed_FL, int16_t speed_FR, int16_t speed_RL, int16_t speed_RR);
 void Motor_Stop(void);
 void Move(int16_t speed);
 void Motor_TranslateLeft(int16_t speed);

@@ -28,9 +28,10 @@ int main(void)
 	GY25_SendQuery();
 	OLED_ShowString(2, 1, "YAW:");
 	Delay_ms(1000);
-	Move_Distance_Mecanum(5.0f, 200, MOVE_TRANSLATE_LEFT);
+	Move_Distance_Mecanum(100.0f, 200, MOVE_TRANSLATE_LEFT);
 	Delay_ms(1000);
-	Move_Distance_Mecanum(5.0f, 200, MOVE_TRANSLATE_RIGHT);
+	Move_Distance_Mecanum(20.0f, 200, MOVE_FORWARD);
+	Move_Distance_Mecanum(100.0f, 200, MOVE_TRANSLATE_RIGHT);
 	Delay_ms(1000);
 
 
