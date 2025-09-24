@@ -10,6 +10,7 @@
 #include "Control.h"   //控制逻辑
 #include "GY25.h"      //GY-25陀螺仪
 #include "HCSR04.h"    //HC-SR04超声波传感器
+#include "Sensor.h"    //光电传感器
 #include "stm32f10x_usart.h" // 显式包含USART头文件
 
 int Base_Speed = 170; // 基础速度，可调
@@ -26,6 +27,7 @@ int main(void)
 	Serial_Init();
 	GY25_Init();		//GY-25陀螺仪初始化
 	HC_SR04_Init();     //HC-SR04超声波传感器初始化
+	Sensor_Init();      //光电传感器初始化
 	Delay_ms(2000);
 	GY25_SendQuery();
 	// OLED_ShowString(2, 1, "YAW:");
@@ -46,6 +48,14 @@ int main(void)
 		OLED_ShowString(1, 1, "Dist:");
 		OLED_ShowNum(1, 6, distance, 4);
 		OLED_ShowString(1, 10, "mm");
+		
+		// 读取光电传感器状态并显示在OLED上
+		uint8_t leftSensor = Sensor_Left_Get();
+		uint8_t rightSensor = Sensor_Right_Get();
+		OLED_ShowString(2, 1, "L:");
+		OLED_ShowNum(2, 3, leftSensor, 1);
+		OLED_ShowString(3, 1, "R:");
+		OLED_ShowNum(3, 3, rightSensor, 1);
 		
 		Delay_ms(100); // 延时100ms，避免刷新过快
 	}

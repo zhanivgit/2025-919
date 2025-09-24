@@ -36,6 +36,7 @@
 ".\objects\serial.o"
 ".\objects\gy25.o"
 ".\objects\hcsr04.o"
+".\objects\sensor.o"
 ".\objects\main.o"
 ".\objects\stm32f10x_it.o"
 --strict --scatter ".\Objects\Project.sct"

@@ -40,3 +40,4 @@
 .\objects\main.o: .\System\Control.h
 .\objects\main.o: .\Hardware\GY25.h
 .\objects\main.o: .\Hardware\HCSR04.h
+.\objects\main.o: .\Hardware\Sensor.h

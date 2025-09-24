@@ -86,6 +86,7 @@
     "limits": "c",
     "math.h": "c",
     "oled_font.h": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "gy25.h": "c"
   }
 }
