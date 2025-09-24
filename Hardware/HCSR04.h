@@ -1,0 +1,12 @@
+#ifndef __HCSR04_H
+#define __HCSR04_H
+
+#include "stm32f10x.h"  // ????????int16_t??
+
+void HC_SR04_Init(void);
+void HC_SR04_Timer_Init(void);  // ????????????
+int16_t sonar_mm(void);
+float sonar(void);
+
+#endif
+

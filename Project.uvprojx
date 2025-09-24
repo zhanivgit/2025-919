@@ -760,6 +760,16 @@
               <FileType>5</FileType>
               <FilePath>.\Hardware\GY25.h</FilePath>
             </File>
+            <File>
+              <FileName>HCSR04.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\HCSR04.c</FilePath>
+            </File>
+            <File>
+              <FileName>HCSR04.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\HCSR04.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
