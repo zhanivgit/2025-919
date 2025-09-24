@@ -218,5 +218,4 @@ void Move_Distance_Mecanum(float distance_cm, int16_t speed, MecanumMovementType
         Delay_ms(10); // 短暂延时以稳定控制
     }
     Motor_Stop(); // 确保最终停止
-    OLED_Clear(); // 停止后清屏
 }

@@ -778,7 +778,7 @@ I (.\Library\stm32f10x_usart.h)(0x68CFCD40)
 I (.\Library\stm32f10x_wwdg.h)(0x68CFCD40)
 I (.\Library\misc.h)(0x68CFCD40)
 F (.\System\Delay.h)(0x68CFCD40)()
-F (.\System\Control.c)(0x68D353B2)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\51\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o .\objects\control.o --omf_browse .\objects\control.crf --depend .\objects\control.d)
+F (.\System\Control.c)(0x68D36082)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\51\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o .\objects\control.o --omf_browse .\objects\control.crf --depend .\objects\control.d)
 I (System\Control.h)(0x68D353B2)
 I (D:\51\ARM\ARMCC\include\stdint.h)(0x588B8344)
 I (D:\51\ARM\ARMCC\include\math.h)(0x588B8344)
@@ -1133,7 +1133,7 @@ I (.\Library\stm32f10x_wwdg.h)(0x68CFCD40)
 I (.\Library\misc.h)(0x68CFCD40)
 I (Hardware\Sensor.h)(0x68D35D34)
 F (.\Hardware\Sensor.h)(0x68D35D34)()
-F (.\User\main.c)(0x68D35DD7)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\51\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\User\main.c)(0x68D3F59E)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\51\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (.\Start\stm32f10x.h)(0x68CFCD40)
 I (.\Start\core_cm3.h)(0x68CFCD40)
 I (D:\51\ARM\ARMCC\include\stdint.h)(0x588B8344)
