@@ -35,6 +35,4 @@
 .\objects\control.o: .\Hardware\ENCODER.h
 .\objects\control.o: .\Hardware\OLED.h
 .\objects\control.o: System\Delay.h
-.\objects\control.o: .\Hardware\Buzzer.h
-.\objects\control.o: .\Hardware\LED.h
 .\objects\control.o: .\Hardware\GY25.h
