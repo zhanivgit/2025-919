@@ -41,5 +41,7 @@ void Motor_Stop(void);
 void Move(int16_t speed);
 void Motor_TranslateLeft(int16_t speed);
 void Motor_TranslateRight(int16_t speed);
+void Motor_TurnLeft90(int16_t speed);
+void Motor_TurnRight90(int16_t speed);
 
 #endif

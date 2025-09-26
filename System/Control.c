@@ -14,8 +14,8 @@
 
 // PID参数定义 - 进一步优化参数以提高运动平滑度
 #define YAW_PID_KP          1.5f    // 进一步降低Kp以减少过度校正
-#define YAW_PID_KI          0.0f    // 保持Ki为0避免积分累积问题
-#define YAW_PID_KD          0.1f    // 进一步降低Kd提高系统稳定性
+#define YAW_PID_KI          0.02f    // 保持Ki为0避免积分累积问题
+#define YAW_PID_KD          0.2f    // 进一步降低Kd提高系统稳定性
 #define YAW_PID_INTEGRAL_LIMIT 30.0f
 #define YAW_PID_OUTPUT_LIMIT   50.0f
 
@@ -333,5 +333,81 @@ void Move_Distance_With_Speed(float distance_cm, int16_t target_speed, MecanumMo
         
         Delay_ms(5); // 缩短控制周期到5ms以提高响应速度
     }
+    Motor_Stop();
+}
+
+/**
+  * @brief  麦克纳姆轮小车按指定速度旋转固定角度
+  * @param  angle 角度（度）
+  * @param  target_speed 速度（0 到 1000）
+  * @param  turn_direction 旋转方向（0-左转，1-右转）
+  * @retval 无
+  */
+void Turn_Angle_With_Speed(float angle, int16_t target_speed, uint8_t turn_direction)
+{
+    float initial_yaw, current_yaw, target_yaw;
+    int16_t motor_speed_FL, motor_speed_FR, motor_speed_RL, motor_speed_RR;
+    
+    // 读取当前YAW角作为初始值
+    if (GY25_IsDataValid()) {
+        initial_yaw = (float)GY25_Data.YAW / 100.0f;
+    } else {
+        initial_yaw = 0.0f;
+    }
+    
+    // 计算目标YAW角
+    if (turn_direction == TURN_LEFT) {
+        target_yaw = initial_yaw + angle;
+        // 处理角度超过180度的情况
+        if (target_yaw > 180.0f) {
+            target_yaw = target_yaw - 360.0f;
+        }
+    } else {
+        target_yaw = initial_yaw - angle;
+        // 处理角度低于-180度的情况
+        if (target_yaw < -180.0f) {
+            target_yaw = target_yaw + 360.0f;
+        }
+    }
+    
+    // 设置电机速度
+    if (turn_direction == TURN_LEFT) {
+        // 左转时，左轮向后，右轮向前
+        motor_speed_FL = -target_speed;
+        motor_speed_FR = target_speed;
+        motor_speed_RL = -target_speed;
+        motor_speed_RR = target_speed;
+    } else {
+        // 右转时，左轮向前，右轮向后
+        motor_speed_FL = target_speed;
+        motor_speed_FR = -target_speed;
+        motor_speed_RL = target_speed;
+        motor_speed_RR = -target_speed;
+    }
+    
+    // 持续旋转直到达到目标角度
+    do {
+        // 更新陀螺仪数据
+        GY25_ProcessData();
+        
+        // 读取当前YAW角
+        if (GY25_IsDataValid()) {
+            current_yaw = (float)GY25_Data.YAW / 100.0f;
+        } else {
+            current_yaw = initial_yaw; // 如果数据无效，保持初始值
+        }
+        
+        // 控制电机
+        Motor_SetSpeed(motor_speed_FL, motor_speed_FR, motor_speed_RL, motor_speed_RR);
+        
+        Delay_ms(5);
+    } while (
+        (turn_direction == TURN_LEFT && 
+         !((current_yaw >= target_yaw - 1.0f) && (current_yaw <= target_yaw + 1.0f))) ||
+        (turn_direction == TURN_RIGHT && 
+         !((current_yaw >= target_yaw - 1.0f) && (current_yaw <= target_yaw + 1.0f)))
+    );
+    
+    // 停止电机
     Motor_Stop();
 }

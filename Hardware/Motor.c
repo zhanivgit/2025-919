@@ -255,3 +255,31 @@ void Motor_SetSpeed(int16_t speed_FL, int16_t speed_FR, int16_t speed_RL, int16_
     MotorA_SetSpeed(speed_RL); // 左后轮
     MotorB_SetSpeed(speed_RR); // 右后轮
 }
+
+/**
+  * @brief  控制小车原地左转90度
+  * @param  speed 速度（0 到 1000）
+  * @retval 无
+  */
+void Motor_TurnLeft90(int16_t speed)
+{
+    // 左转时，左轮向后，右轮向前
+    MotorC_SetSpeed(-speed); // 左前轮向后
+    MotorD_SetSpeed(speed);  // 右前轮向前
+    MotorA_SetSpeed(-speed); // 左后轮向后
+    MotorB_SetSpeed(speed);  // 右后轮向前
+}
+
+/**
+  * @brief  控制小车原地右转90度
+  * @param  speed 速度（0 到 1000）
+  * @retval 无
+  */
+void Motor_TurnRight90(int16_t speed)
+{
+    // 右转时，左轮向前，右轮向后
+    MotorC_SetSpeed(speed);   // 左前轮向前
+    MotorD_SetSpeed(-speed);  // 右前轮向后
+    MotorA_SetSpeed(speed);   // 左后轮向前
+    MotorB_SetSpeed(-speed);  // 右后轮向后
+}

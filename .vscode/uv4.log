@@ -1,3 +1,12 @@
-Load "e:\\trsalatec\\jiqiren\\2025-919-1\\Objects\\Project.axf" 
-Erase Done.Programming Done.Verify OK.Application running ...
-Flash Load finished at 11:03:57
+*** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\51\ARM\ARMCC\Bin'
+Build target 'Target 1'
+compiling main.c...
+.\Hardware\Sensor.h(34): warning:  #1-D: last line of file ends without a newline
+  #endif
+User\main.c(97): warning:  #1-D: last line of file ends without a newline
+  }
+User\main.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=10948 RO-data=336 RW-data=68 ZI-data=1956  
+".\Objects\Project.axf" - 0 Error(s), 2 Warning(s).
+Build Time Elapsed:  00:00:02

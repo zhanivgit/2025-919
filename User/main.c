@@ -21,22 +21,52 @@ int Base_Speed = 170; // 基础速度，可调
   * @param  无
   * @retval 无
   */
-void test_move_distance_with_speed(void)
+void step12(void)
 {
-	// 测试前进50cm，速度为200
-	Move_Distance_With_Speed(50, 200, MOVE_FORWARD);
-	Delay_ms(1000);
+	Move_Distance_With_Speed(60, 200, MOVE_FORWARD);
 	
-	// 测试左平移30cm，速度为150
-	Move_Distance_With_Speed(100, 400, MOVE_TRANSLATE_LEFT);
-	Delay_ms(1000);
+	Move_Distance_With_Speed(60, 300, MOVE_TRANSLATE_LEFT);
+
+	Move_Distance_With_Speed(25, 200, MOVE_FORWARD);
+
+
+	Move_Distance_With_Speed(90, 300, MOVE_TRANSLATE_LEFT);
+
+    Move_Distance_With_Speed(20,200, MOVE_BACKWARD);
+    Move_Distance_With_Speed(50,300, MOVE_TRANSLATE_LEFT);
+}
+void step3(void)
+{
+	// 向左平移直到左侧传感器检测到0（检测到黑线）
+	while(Sensor_Left_Get() != 0) {
+		Motor_TranslateLeft(250);  // 以400的速度向左平移
+		Delay_ms(10);
+	}
 	
-	// 测试后退20cm，速度为180
-	Move_Distance_With_Speed(20, 180, MOVE_BACKWARD);
-	Delay_ms(1000);
+	// 检测到黑线后停止
+	Motor_Stop();
 	
-	// 测试右平移25cm，速度为160
-	Move_Distance_With_Speed(100, 400, MOVE_TRANSLATE_RIGHT);
+	// 开始后退，并在过程中检测中间传感器
+	while(1) {
+		Move(-200);  // 以400的速度后退
+		
+		// 检查中间传感器是否检测到物体
+		if(Sensor_Middle_Get() == 1) {
+			// 检测到物体，立即向右平移
+			Motor_TranslateRight(400);
+			
+			// 持续向右平移直到右侧传感器检测到0
+			while(Sensor_Right_Get() != 1) {
+				Move(-200);
+			}
+			
+			// 右侧检测到0后停止并重新开始后退
+			Motor_Stop();
+			continue; // 继续外层循环，重新开始后退
+		}
+		
+		Delay_ms(10);
+	}
 }
 
 int main(void)
@@ -54,8 +84,8 @@ int main(void)
 	GY25_SendQuery();
 	
 	// 测试Move_Distance_With_Speed函数
-	test_move_distance_with_speed();
-
+	step12();
+	step3();
 	
 	// 下面的代码不会被执行，保留用于调试参考
 	while (1)
