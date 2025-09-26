@@ -23,49 +23,35 @@ int Base_Speed = 170; // 基础速度，可调
   */
 void step12(void)
 {
-	Move_Distance_With_Speed(60, 200, MOVE_FORWARD);
+	Move_Distance_With_Speed(60, 300, MOVE_FORWARD, NULL);
 	
-	Move_Distance_With_Speed(60, 300, MOVE_TRANSLATE_LEFT);
+	Move_Distance_With_Speed(60, 300, MOVE_TRANSLATE_LEFT, NULL);
 
-	Move_Distance_With_Speed(25, 200, MOVE_FORWARD);
+	Move_Distance_With_Speed(25, 300, MOVE_FORWARD, NULL);
 
 
-	Move_Distance_With_Speed(90, 300, MOVE_TRANSLATE_LEFT);
+	Move_Distance_With_Speed(90, 300, MOVE_TRANSLATE_LEFT, NULL);
 
-    Move_Distance_With_Speed(20,200, MOVE_BACKWARD);
-    Move_Distance_With_Speed(50,300, MOVE_TRANSLATE_LEFT);
+    Move_Distance_With_Speed(20,300, MOVE_BACKWARD, NULL);
+    Move_Distance_With_Speed(50,300, MOVE_TRANSLATE_LEFT, NULL);
 }
 void step3(void)
 {
-	// 向左平移直到左侧传感器检测到0（检测到黑线）
-	while(Sensor_Left_Get() != 0) {
-		Motor_TranslateLeft(250);  // 以400的速度向左平移
-		Delay_ms(10);
-	}
-	
-	// 检测到黑线后停止
-	Motor_Stop();
+	// 向左平移直到左侧传感器检测到0(0为悬崖)
+	Move_Distance_With_Speed(70, 250, MOVE_TRANSLATE_LEFT, Sensor_Left_Get);
 	
 	// 开始后退，并在过程中检测中间传感器
 	while(1) {
-		Move(-200);  // 以400的速度后退
-		
-		// 检查中间传感器是否检测到物体
+		// 检查中间传感器是否检测到1(1表示障碍)
 		if(Sensor_Middle_Get() == 1) {
-			// 检测到物体，立即向右平移
-			Motor_TranslateRight(400);
-			
-			// 持续向右平移直到右侧传感器检测到0
-			while(Sensor_Right_Get() != 1) {
-				Move(-200);
-			}
-			
-			// 右侧检测到0后停止并重新开始后退
-			Motor_Stop();
-			continue; // 继续外层循环，重新开始后退
+			// 检测到1，开始向右平移
+			// 持续向右平移直到右侧传感器检测到0(0为悬崖)
+			Move_Distance_With_Speed(50, 400, MOVE_TRANSLATE_RIGHT, Sensor_Right_Get);
+			// 右侧检测到0后停止平移（Move_Distance_With_Speed内部已处理）
+			// 停止后，外层循环会继续执行后退
 		}
 		
-		Delay_ms(10);
+		Move_Distance_With_Speed(20, 200, MOVE_BACKWARD, NULL);  // 持续后退一小段
 	}
 }
 

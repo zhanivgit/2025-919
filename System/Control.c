@@ -179,7 +179,7 @@ int calculate_wheel_speed(int current_encoder, int last_encoder, uint32_t delta_
   * @param  movement_type 移动方向
   * @retval 无
   */
-void Move_Distance_With_Speed(float distance_cm, int16_t target_speed, MecanumMovementType movement_type)
+void Move_Distance_With_Speed(float distance_cm, int16_t target_speed, MecanumMovementType movement_type, StopConditionFunc stop_condition_func)
 {
     float distance_mm = distance_cm * 10.0f;
     float turns = distance_mm / (PI * WHEEL_DIAMETER_MM);
@@ -212,29 +212,27 @@ void Move_Distance_With_Speed(float distance_cm, int16_t target_speed, MecanumMo
         Yaw_PID.Target = 0.0f; 
     }
     
-    // 初始化轮子速度PID控制器（用于平移时的速度控制）
-    if (movement_type == MOVE_TRANSLATE_LEFT || movement_type == MOVE_TRANSLATE_RIGHT) {
-        PID_Init(&Wheel_FL_PID, WHEEL_PID_KP, WHEEL_PID_KI, WHEEL_PID_KD, 
-                 WHEEL_PID_INTEGRAL_LIMIT, WHEEL_PID_OUTPUT_LIMIT);
-        PID_Init(&Wheel_FR_PID, WHEEL_PID_KP, WHEEL_PID_KI, WHEEL_PID_KD, 
-                 WHEEL_PID_INTEGRAL_LIMIT, WHEEL_PID_OUTPUT_LIMIT);
-        PID_Init(&Wheel_RL_PID, WHEEL_PID_KP, WHEEL_PID_KI, WHEEL_PID_KD, 
-                 WHEEL_PID_INTEGRAL_LIMIT, WHEEL_PID_OUTPUT_LIMIT);
-        PID_Init(&Wheel_RR_PID, WHEEL_PID_KP, WHEEL_PID_KI, WHEEL_PID_KD, 
-                 WHEEL_PID_INTEGRAL_LIMIT, WHEEL_PID_OUTPUT_LIMIT);
-        
-        // 设置PID目标值
-        Wheel_FL_PID.Target = abs(target_speed);
-        Wheel_FR_PID.Target = abs(target_speed);
-        Wheel_RL_PID.Target = abs(target_speed);
-        Wheel_RR_PID.Target = abs(target_speed);
-        
-        // 初始化编码器记录
-        last_encoder_FL = Read_Front_Left_Encoder();
-        last_encoder_FR = Read_Front_Right_Encoder();
-        last_encoder_RL = Read_Rear_Left_Encoder();
-        last_encoder_RR = Read_Rear_Right_Encoder();
-    }
+    // 初始化轮子速度PID控制器
+    PID_Init(&Wheel_FL_PID, WHEEL_PID_KP, WHEEL_PID_KI, WHEEL_PID_KD, 
+             WHEEL_PID_INTEGRAL_LIMIT, WHEEL_PID_OUTPUT_LIMIT);
+    PID_Init(&Wheel_FR_PID, WHEEL_PID_KP, WHEEL_PID_KI, WHEEL_PID_KD, 
+             WHEEL_PID_INTEGRAL_LIMIT, WHEEL_PID_OUTPUT_LIMIT);
+    PID_Init(&Wheel_RL_PID, WHEEL_PID_KP, WHEEL_PID_KI, WHEEL_PID_KD, 
+             WHEEL_PID_INTEGRAL_LIMIT, WHEEL_PID_OUTPUT_LIMIT);
+    PID_Init(&Wheel_RR_PID, WHEEL_PID_KP, WHEEL_PID_KI, WHEEL_PID_KD, 
+             WHEEL_PID_INTEGRAL_LIMIT, WHEEL_PID_OUTPUT_LIMIT);
+    
+    // 设置PID目标值
+    Wheel_FL_PID.Target = abs(target_speed);
+    Wheel_FR_PID.Target = abs(target_speed);
+    Wheel_RL_PID.Target = abs(target_speed);
+    Wheel_RR_PID.Target = abs(target_speed);
+    
+    // 初始化编码器记录
+    last_encoder_FL = Read_Front_Left_Encoder();
+    last_encoder_FR = Read_Front_Right_Encoder();
+    last_encoder_RL = Read_Rear_Left_Encoder();
+    last_encoder_RR = Read_Rear_Right_Encoder();
     
     while (1)
     {
@@ -252,84 +250,85 @@ void Move_Distance_With_Speed(float distance_cm, int16_t target_speed, MecanumMo
             break;
         }
         
-        // 根据移动类型控制电机
-        switch (movement_type)
-        {
-            case MOVE_FORWARD:
-                Move(target_speed);
-                break;
-            case MOVE_BACKWARD:
-                Move(-target_speed);
-                break;
-            case MOVE_TRANSLATE_LEFT:
-            case MOVE_TRANSLATE_RIGHT:
-                // 读取当前YAW角并进行PID计算
-                if (GY25_IsDataValid()) {
-                    yaw_correction = PID_Calculate(&Yaw_PID, (float)GY25_Data.YAW / 100.0f);
-                } else {
-                    yaw_correction = 0;
-                }
-                
-                current_encoder_FL = Read_Front_Left_Encoder();
-                current_encoder_FR = Read_Front_Right_Encoder();
-                current_encoder_RL = Read_Rear_Left_Encoder();
-                current_encoder_RR = Read_Rear_Right_Encoder();
-                
-                actual_speed_FL = calculate_wheel_speed(current_encoder_FL, last_encoder_FL, 5);
-                actual_speed_FR = calculate_wheel_speed(current_encoder_FR, last_encoder_FR, 5);
-                actual_speed_RL = calculate_wheel_speed(current_encoder_RL, last_encoder_RL, 5);
-                actual_speed_RR = calculate_wheel_speed(current_encoder_RR, last_encoder_RR, 5);
-                
-                // 更新编码器记录
-                last_encoder_FL = current_encoder_FL;
-                last_encoder_FR = current_encoder_FR;
-                last_encoder_RL = current_encoder_RL;
-                last_encoder_RR = current_encoder_RR;
-                
-                speed_pid_output_FL = PID_Calculate_Speed(&Wheel_FL_PID, abs(actual_speed_FL));
-                speed_pid_output_FR = PID_Calculate_Speed(&Wheel_FR_PID, abs(actual_speed_FR));
-                speed_pid_output_RL = PID_Calculate_Speed(&Wheel_RL_PID, abs(actual_speed_RL));
-                speed_pid_output_RR = PID_Calculate_Speed(&Wheel_RR_PID, abs(actual_speed_RR));
-                
-                // 根据平移方向和YAW角校正调整电机速度
-                if (movement_type == MOVE_TRANSLATE_LEFT) {
-                    // 左平移的基础速度分配
-                    motor_speed_FL = -target_speed;
-                    motor_speed_FR = target_speed;
-                    motor_speed_RL = target_speed;
-                    motor_speed_RR = -target_speed;
-                } else {
-                    // 右平移的基础速度分配
-                    motor_speed_FL = target_speed;
-                    motor_speed_FR = -target_speed;
-                    motor_speed_RL = -target_speed;
-                    motor_speed_RR = target_speed;
-                }
-                
-                // 应用速度PID校正
-                motor_speed_FL = motor_speed_FL > 0 ? (int16_t)(motor_speed_FL + speed_pid_output_FL) : (int16_t)(motor_speed_FL - speed_pid_output_FL);
-                motor_speed_FR = motor_speed_FR > 0 ? (int16_t)(motor_speed_FR + speed_pid_output_FR) : (int16_t)(motor_speed_FR - speed_pid_output_FR);
-                motor_speed_RL = motor_speed_RL > 0 ? (int16_t)(motor_speed_RL + speed_pid_output_RL) : (int16_t)(motor_speed_RL - speed_pid_output_RL);
-                motor_speed_RR = motor_speed_RR > 0 ? (int16_t)(motor_speed_RR + speed_pid_output_RR) : (int16_t)(motor_speed_RR - speed_pid_output_RR);
-                
-                // 应用YAW角校正
-                motor_speed_FL -= (int16_t)yaw_correction;
-                motor_speed_FR += (int16_t)yaw_correction;
-                motor_speed_RL -= (int16_t)yaw_correction;
-                motor_speed_RR += (int16_t)yaw_correction;
-                
-                // 对计算出的电机速度进行限幅，确保在-1000到1000之间
-                motor_speed_FL = fmaxf(-1000, fminf(1000, motor_speed_FL));
-                motor_speed_FR = fmaxf(-1000, fminf(1000, motor_speed_FR));
-                motor_speed_RL = fmaxf(-1000, fminf(1000, motor_speed_RL));
-                motor_speed_RR = fmaxf(-1000, fminf(1000, motor_speed_RR));
-                
-                Motor_SetSpeed(motor_speed_FL, motor_speed_FR, motor_speed_RL, motor_speed_RR);
-                break;
-            default:
-                Motor_Stop();
-                break;
+        // 检查外部停止条件
+        if (stop_condition_func != NULL && stop_condition_func() == 0) { // 0表示检测到信号，即停止条件满足
+            Motor_Stop();
+            break;
         }
+        
+        // 读取当前YAW角并进行PID计算
+        if (GY25_IsDataValid()) {
+            yaw_correction = PID_Calculate(&Yaw_PID, (float)GY25_Data.YAW / 100.0f);
+        } else {
+            yaw_correction = 0;
+        }
+        
+        current_encoder_FL = Read_Front_Left_Encoder();
+        current_encoder_FR = Read_Front_Right_Encoder();
+        current_encoder_RL = Read_Rear_Left_Encoder();
+        current_encoder_RR = Read_Rear_Right_Encoder();
+        
+        actual_speed_FL = calculate_wheel_speed(current_encoder_FL, last_encoder_FL, 5);
+        actual_speed_FR = calculate_wheel_speed(current_encoder_FR, last_encoder_FR, 5);
+        actual_speed_RL = calculate_wheel_speed(current_encoder_RL, last_encoder_RL, 5);
+        actual_speed_RR = calculate_wheel_speed(current_encoder_RR, last_encoder_RR, 5);
+        
+        // 更新编码器记录
+        last_encoder_FL = current_encoder_FL;
+        last_encoder_FR = current_encoder_FR;
+        last_encoder_RL = current_encoder_RL;
+        last_encoder_RR = current_encoder_RR;
+        
+        speed_pid_output_FL = PID_Calculate_Speed(&Wheel_FL_PID, abs(actual_speed_FL));
+        speed_pid_output_FR = PID_Calculate_Speed(&Wheel_FR_PID, abs(actual_speed_FR));
+        speed_pid_output_RL = PID_Calculate_Speed(&Wheel_RL_PID, abs(actual_speed_RL));
+        speed_pid_output_RR = PID_Calculate_Speed(&Wheel_RR_PID, abs(actual_speed_RR));
+        
+        // 根据移动类型和YAW角校正调整电机速度
+        if (movement_type == MOVE_FORWARD) {
+            motor_speed_FL = target_speed;
+            motor_speed_FR = target_speed;
+            motor_speed_RL = target_speed;
+            motor_speed_RR = target_speed;
+        } else if (movement_type == MOVE_BACKWARD) {
+            motor_speed_FL = -target_speed;
+            motor_speed_FR = -target_speed;
+            motor_speed_RL = -target_speed;
+            motor_speed_RR = -target_speed;
+        } else if (movement_type == MOVE_TRANSLATE_LEFT) {
+            motor_speed_FL = -target_speed;
+            motor_speed_FR = target_speed;
+            motor_speed_RL = target_speed;
+            motor_speed_RR = -target_speed;
+        } else if (movement_type == MOVE_TRANSLATE_RIGHT) {
+            motor_speed_FL = target_speed;
+            motor_speed_FR = -target_speed;
+            motor_speed_RL = -target_speed;
+            motor_speed_RR = target_speed;
+        } else {
+            Motor_Stop();
+            break;
+        }
+        
+        // 应用速度PID校正
+        motor_speed_FL = motor_speed_FL > 0 ? (int16_t)(motor_speed_FL + speed_pid_output_FL) : (int16_t)(motor_speed_FL - speed_pid_output_FL);
+        motor_speed_FR = motor_speed_FR > 0 ? (int16_t)(motor_speed_FR + speed_pid_output_FR) : (int16_t)(motor_speed_FR - speed_pid_output_FR);
+        motor_speed_RL = motor_speed_RL > 0 ? (int16_t)(motor_speed_RL + speed_pid_output_RL) : (int16_t)(motor_speed_RL - speed_pid_output_RL);
+        motor_speed_RR = motor_speed_RR > 0 ? (int16_t)(motor_speed_RR + speed_pid_output_RR) : (int16_t)(motor_speed_RR - speed_pid_output_RR);
+        
+        // 应用YAW角校正
+        motor_speed_FL -= (int16_t)yaw_correction;
+        motor_speed_FR += (int16_t)yaw_correction;
+        motor_speed_RL -= (int16_t)yaw_correction;
+        motor_speed_RR += (int16_t)yaw_correction;
+        
+        // 对计算出的电机速度进行限幅，确保在-1000到1000之间
+        motor_speed_FL = fmaxf(-1000, fminf(1000, motor_speed_FL));
+        motor_speed_FR = fmaxf(-1000, fminf(1000, motor_speed_FR));
+        motor_speed_RL = fmaxf(-1000, fminf(1000, motor_speed_RL));
+        motor_speed_RR = fmaxf(-1000, fminf(1000, motor_speed_RR));
+        
+        Motor_SetSpeed(motor_speed_FL, motor_speed_FR, motor_speed_RL, motor_speed_RR);
         
         Delay_ms(5); // 缩短控制周期到5ms以提高响应速度
     }

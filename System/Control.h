@@ -28,7 +28,8 @@ typedef enum {
 
 void PID_Init(PID_TypeDef* pid, float Kp, float Ki, float Kd, float integral_limit, float output_limit);
 float PID_Calculate(PID_TypeDef* pid, float actual_value);
-void Move_Distance_With_Speed(float distance_cm, int16_t target_speed, MecanumMovementType movement_type);
+typedef uint8_t (*StopConditionFunc)(void);
+void Move_Distance_With_Speed(float distance_cm, int16_t target_speed, MecanumMovementType movement_type, StopConditionFunc stop_condition_func);
 void Turn_Angle_With_Speed(float angle, int16_t target_speed, uint8_t turn_direction);
 
 #define TURN_LEFT 0

@@ -778,8 +778,8 @@ I (.\Library\stm32f10x_usart.h)(0x68CFCD40)
 I (.\Library\stm32f10x_wwdg.h)(0x68CFCD40)
 I (.\Library\misc.h)(0x68CFCD40)
 F (.\System\Delay.h)(0x68CFCD40)()
-F (.\System\Control.c)(0x68D636F8)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\51\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o .\objects\control.o --omf_browse .\objects\control.crf --depend .\objects\control.d)
-I (System\Control.h)(0x68D636FB)
+F (.\System\Control.c)(0x68D650FF)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\51\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o .\objects\control.o --omf_browse .\objects\control.crf --depend .\objects\control.d)
+I (System\Control.h)(0x68D64CAD)
 I (D:\51\ARM\ARMCC\include\stdint.h)(0x588B8344)
 I (D:\51\ARM\ARMCC\include\math.h)(0x588B8344)
 I (D:\51\ARM\ARMCC\include\stdlib.h)(0x588B8344)
@@ -815,7 +815,7 @@ I (.\Hardware\ENCODER.h)(0x68CFE36A)
 I (.\Hardware\OLED.h)(0x68CFCD40)
 I (System\Delay.h)(0x68CFCD40)
 I (.\Hardware\GY25.h)(0x68D0A7C7)
-F (.\System\Control.h)(0x68D636FB)()
+F (.\System\Control.h)(0x68D64CAD)()
 F (.\Hardware\LED.c)(0x68CFCD40)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\51\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o .\objects\led.o --omf_browse .\objects\led.crf --depend .\objects\led.d)
 I (.\Start\stm32f10x.h)(0x68CFCD40)
 I (.\Start\core_cm3.h)(0x68CFCD40)
@@ -1099,7 +1099,7 @@ I (.\Library\stm32f10x_wwdg.h)(0x68CFCD40)
 I (.\Library\misc.h)(0x68CFCD40)
 I (Hardware\Sensor.h)(0x68D62B59)
 F (.\Hardware\Sensor.h)(0x68D62B59)()
-F (.\User\main.c)(0x68D638BD)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\51\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\User\main.c)(0x68D65778)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\51\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include-ID:\51\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (.\Start\stm32f10x.h)(0x68CFCD40)
 I (.\Start\core_cm3.h)(0x68CFCD40)
 I (D:\51\ARM\ARMCC\include\stdint.h)(0x588B8344)
@@ -1137,7 +1137,7 @@ I (.\Hardware\Motor.h)(0x68D6103C)
 I (.\Hardware\ENCODER.h)(0x68CFE36A)
 I (.\Hardware\Serial.h)(0x68CFCD40)
 I (D:\51\ARM\ARMCC\include\stdio.h)(0x588B8344)
-I (.\System\Control.h)(0x68D636FB)
+I (.\System\Control.h)(0x68D64CAD)
 I (.\Hardware\GY25.h)(0x68D0A7C7)
 I (.\Hardware\Sensor.h)(0x68D62B59)
 F (.\User\stm32f10x_conf.h)(0x68CFCD40)()
